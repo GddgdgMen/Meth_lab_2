@@ -1,7 +1,7 @@
 'use strict';
 
 const { SinglyLinkedNode } = require('./singlyLinkedNode.js');
-const { isChar, validateIndex } = require('./validations');
+const { isChar, validateIndex } = require('./validations.js');
 
 class SinglyLinkedList {
   constructor() {

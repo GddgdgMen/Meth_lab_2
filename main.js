@@ -1,6 +1,6 @@
 'use strict';
 
-import { SinglyLinkedNode } from './src/singlyLinkedNode';
+import { SinglyLinkedNode } from './src/singlyLinkedNode.js';
 
 const list = new SinglyLinkedList();
 const list2 = new SinglyLinkedList();

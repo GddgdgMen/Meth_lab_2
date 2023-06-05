@@ -1,6 +1,6 @@
 'use strict';
 
-const { List } = require('../src/List');
+import { List } from './src/list.js';
 
 test('Empty list length must be 0', () => {
   const list = new List();
