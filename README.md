@@ -1,4 +1,4 @@
-# Meth_lab_2
+# Methodologies Lab 2
 By Anton Svirskyi, group IM-12
 
 ```
