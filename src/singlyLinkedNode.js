@@ -7,4 +7,4 @@ class SinglyLinkedNode {
   }
 }
 
-module.exports = { SinglyLinkedListNode };
+module.exports = { SinglyLinkedNode };

@@ -1,24 +1,17 @@
 'use strict';
 
-const { SinglyLinkedListNode } = require('./singlyLinkedListNode.js');
+const { SinglyLinkedNode } = require('../SinglyLinkedNode.js');
 const { isChar, validateIndex } = require('./validations.js');
+
 class SinglyLinkedList {
   constructor() {
     this.head = null;
     this.tail = null;
+    this.size = 0;
   }
 
   length() {
-    if (this.head === null && this.tail === null) {
-      return 0;
-    }
-    let count = 1;
-    let node = this.head;
-    while (node.next !== null) {
-      node = node.next;
-      count++;
-    }
-    return count;
+    return this.size;
   }
 
   append(element) {
@@ -26,12 +19,14 @@ class SinglyLinkedList {
     const newNode = new SinglyLinkedNode(element);
     if (!this.head) this.head = newNode;
     else this.tail.next = newNode;
+    newNode.next = this.head;
     this.tail = newNode;
+    this.size++;
   }
 
   insert(element, index) {
     isChar(element);
-    validateIndex(index, this.length());
+    validateIndex(index, this.size);
     const newNode = new SinglyLinkedNode(element);
     if (index === 0) {
       newNode.next = this.head;
@@ -49,49 +44,50 @@ class SinglyLinkedList {
       newNode.next = node.next;
       node.next = newNode;
     }
+    this.size++;
   }
 
   delete(index) {
-    validateIndex(index, this.length());
+    validateIndex(index, this.size);
     let deletedItem = null;
-    if (this.length === 1) {
+    if (this.size === 1) {
       deletedItem = this.head.value;
       this.head = null;
       this.tail = null;
     } else if (index === 0) {
       deletedItem = this.head.value;
       this.head = this.head.next;
+      this.tail.next = this.head;
     } else {
       let node = this.head;
       for (let i = 0; i < index - 1; i++) {
         node = node.next;
       }
       deletedItem = node.next.value;
-      if (index === this.length() - 1) this.tail = node;
       node.next = node.next.next;
+      if (index === this.size) this.tail = node;
     }
+    this.size--;
     return deletedItem;
   }
 
   deleteAll(element) {
     isChar(element);
     if (this.head === this.tail) {
-        return;
-      }
-      let counter = 0;
-      let nodeToDelete = this.head;
-      while (nodeToDelete !== null) {
-        if (nodeToDelete.value === element) {
-          this.delete(counter);
-          counter--;
+      return;
+    }
+    let nodeToDelete = this.head;
+    for (let i = 0; i < this.size; i++) {
+      if (nodeToDelete.value === element) {
+        this.delete(i);
+        i--;
       }
       nodeToDelete = nodeToDelete.next;
-      counter++;
     }
   }
 
   get(index) {
-    validateIndex(index, this.length());
+    validateIndex(index, this.size);
     let node = this.head;
     for (let i = 0; i < index; i++) {
       node = node.next;
@@ -100,8 +96,9 @@ class SinglyLinkedList {
   }
 
   clone() {
+    const newList = new SinglyLinkedList();
     let node = this.head;
-    for (let i = 0; i < this.length(); i++) {
+    for (let i = 0; i < this.size; i++) {
       newList.append(node.value);
       node = node.next;
     }
@@ -109,25 +106,22 @@ class SinglyLinkedList {
   }
 
   reverse() {
-    let current = this.head;
-    let i = 0;
-    while (i < this.length() / 2) {
-        let last = this.head;
-        for (let j = 1; j < this.length() - i; j++) {
-          last = last.next;
-        }
-        const buffer = last.value;
-        last.value = current.value;
-        current.value = buffer;
-        current = current.next;
-      i++
+    let node = this.head;
+    let prevNode = this.tail;
+    for (let i = 0; i < this.size; i++) {
+      const next = node.next;
+      node.next = prevNode;
+      prevNode = node;
+      node = next;
     }
+    this.head = prevNode;
+    if (this.size > 0) this.tail = this.head.next;
   }
 
   findFirst(element) {
     isChar(element);
     let node = this.head;
-    for (let i = 0; i < this.length(); i++) {
+    for (let i = 0; i < this.size; i++) {
       if (node.value === element) return i;
       node = node.next;
     }
@@ -138,9 +132,9 @@ class SinglyLinkedList {
     isChar(element);
     let node = this.head;
     let lastIndex = -1;
-    for (let i = 0; i < this.length(); i++) {
-        if (node.value === element) lastIndex = i;
-        node = node.next;
+    for (let i = 0; i < this.size; i++) {
+      if (node.value === element) lastIndex = i;
+      node = node.next;
     }
     return lastIndex;
   }
@@ -148,11 +142,12 @@ class SinglyLinkedList {
   clear() {
     this.head = null;
     this.tail = null;
+    this.size = 0;
   }
 
   extend(elements) {
     let node = elements.head;
-    for (let i = 0; i < elements.length(); i++) {
+    for (let i = 0; i < elements.size; i++) {
       this.append(node.value);
       node = node.next;
     }

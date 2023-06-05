@@ -1,3 +1,5 @@
+'use strict';
+
 const { isChar, validateIndex } = require('./validations.js');
 
 class List {
