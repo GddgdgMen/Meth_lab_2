@@ -160,6 +160,21 @@ test('After clearing the list with clear() length must be 0', () => {
   expect(list.length()).toBe(0);
 });
 
+test('WMethod extend() works properly', () => {
+  const list = new List();
+  list.append('a');
+  list.append('b');
+  const list2 = new List();
+  list2.append('b');
+  list2.append('c');
+  list.extend(list2);
+  expect(list.length()).toBe(4);
+  expect(list.get(0)).toBe('a');
+  expect(list.get(1)).toBe('b');
+  expect(list.get(2)).toBe('b');
+  expect(list.get(3)).toBe('c');
+});
+
 test('Changing extended list does not affect list used to extend', () => {
   const list = new List();
   list.append('a');
@@ -187,4 +202,22 @@ test('Index validation works properly', () => {
   expect(list.insert.bind(list, 'a', -1)).toThrow('Index out of range');
   expect(list.insert.bind(list, 'a', 5)).toThrow('Index out of range');
   expect(list.insert.bind(list, 'a', '0')).toThrow('Index must be a number');
+});
+
+test('Element validation works properly', () => {
+  const list = new List();
+  expect(list.append.bind(list, 1)).toThrow('Element type must be char');
+  expect(list.append.bind(list, '11')).toThrow('Element type must be char');
+
+  expect(list.insert.bind(list, 1, 0)).toThrow('Element type must be char');
+  expect(list.insert.bind(list, '11', 0)).toThrow('Element type must be char');
+
+  expect(list.deleteAll.bind(list, 1)).toThrow('Element type must be char');
+  expect(list.deleteAll.bind(list, '11')).toThrow('Element type must be char');
+
+  expect(list.findFirst.bind(list, 1)).toThrow('Element type must be char');
+  expect(list.findFirst.bind(list, '11')).toThrow('Element type must be char');
+
+  expect(list.findLast.bind(list, 1)).toThrow('Element type must be char');
+  expect(list.findLast.bind(list, '11')).toThrow('Element type must be char');
 });
