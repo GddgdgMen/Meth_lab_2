@@ -1,5 +1,5 @@
 'use strict';
-import { SinglyLinkedList } from './src/singlyLinkedList.js';
+import { SinglyLinkedList } from '../src/singlyLinkedList.js';
 
 test('Empty list length must be 0', () => {
   const list = new SinglyLinkedList();
