@@ -1,5 +1,3 @@
-'use strict';
-
 const { isChar, validateIndex } = require('./validations.js');
 
 class List {
@@ -78,4 +76,4 @@ class List {
   }
 }
 
-export default {List}
+module.exports = { List };

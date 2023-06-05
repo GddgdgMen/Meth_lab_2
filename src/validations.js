@@ -17,4 +17,4 @@ const validateIndex = (index, length) => {
   return true;
 };
 
-export default { isChar, validateIndex };
+module.exports = { isChar, validateIndex };

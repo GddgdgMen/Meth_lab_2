@@ -1,8 +1,7 @@
 'use strict';
 
-const { SinglyLinkedNode } = require('./singlyLinkedNode.js');
+const { SinglyLinkedListNode } = require('./singlyLinkedListNode.js');
 const { isChar, validateIndex } = require('./validations.js');
-
 class SinglyLinkedList {
   constructor() {
     this.head = null;
@@ -160,4 +159,4 @@ class SinglyLinkedList {
   }
 }
 
-export default {SinglyLinkedList}
+module.exports = { SinglyLinkedList };
